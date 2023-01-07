@@ -49,24 +49,31 @@ def request_to_json_placeholder_from_threading(urls):
     #     thred.start()
     #     thred.join()
 
-    thred1 = threading.Thread(target=request_to_json_pl, args=(urls[0], ))
-    thred1.start()
-    thred2 = threading.Thread(target=request_to_json_pl, args=(urls[1], ))
-    thred2.start()
-    thred3 = threading.Thread(target=request_to_json_pl, args=(urls[2], ))
-    thred3.start()
-    thred4 = threading.Thread(target=request_to_json_pl, args=(urls[3], ))
-    thred4.start()
-    thred5 = threading.Thread(target=request_to_json_pl, args=(urls[4], ))
-    thred5.start()
-    thred6 = threading.Thread(target=request_to_json_pl, args=(urls[5], ))
-    thred6.start()
-    thred1.join()
-    thred2.join()
-    thred3.join()
-    thred4.join()
-    thred5.join()
-    thred6.join()
+    # for i, j in enumerate(urls):
+    #     print(i, j)
+
+    threds = [threading.Thread(target=request_to_json_pl, args=(i, )) for i in urls]
+    [i.start() for i in threds]
+    [i.join() for i in threds]
+
+    # thred1 = threading.Thread(target=request_to_json_pl, args=(urls[0], ))
+    # thred1.start()
+    # thred2 = threading.Thread(target=request_to_json_pl, args=(urls[1], ))
+    # thred2.start()
+    # thred3 = threading.Thread(target=request_to_json_pl, args=(urls[2], ))
+    # thred3.start()
+    # thred4 = threading.Thread(target=request_to_json_pl, args=(urls[3], ))
+    # thred4.start()
+    # thred5 = threading.Thread(target=request_to_json_pl, args=(urls[4], ))
+    # thred5.start()
+    # thred6 = threading.Thread(target=request_to_json_pl, args=(urls[5], ))
+    # thred6.start()
+    # thred1.join()
+    # thred2.join()
+    # thred3.join()
+    # thred4.join()
+    # thred5.join()
+    # thred6.join()
 
     with open("result_data_json.json", "w") as file:
         json.dump(data_json, file)
