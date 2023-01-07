@@ -1,3 +1,4 @@
+import random
 import time
 
 import requests
@@ -15,11 +16,11 @@ array_url = [f"https://jsonplaceholder.typicode.com/posts/{count_data}",
 
 
 def time_decorator(func):
-    start = time.time()
-
     def wrapper(*args, **kwargs):
+        start = time.time()
         func(*args, **kwargs)
-        print(time.time()-start)
+        finish = time.time()
+        print(finish-start)
     return wrapper
 
 
@@ -38,12 +39,34 @@ def request_to_json_placeholder_from_threading(urls):
     data_json = []
 
     def request_to_json_pl(url):
+        sleep_time = random.randrange(1, 4)
+        # time.sleep(sleep_time)
+        # print(sleep_time)
         data_json.append(requests.get(url).json())
 
-    for i in urls:
-        thred = threading.Thread(target=request_to_json_pl, args=(i, ))
-        thred.start()
-        thred.join()
+    # for i in urls:
+    #     thred = threading.Thread(target=request_to_json_pl, args=(i, ))
+    #     thred.start()
+    #     thred.join()
+
+    thred1 = threading.Thread(target=request_to_json_pl, args=(urls[0], ))
+    thred1.start()
+    thred2 = threading.Thread(target=request_to_json_pl, args=(urls[1], ))
+    thred2.start()
+    thred3 = threading.Thread(target=request_to_json_pl, args=(urls[2], ))
+    thred3.start()
+    thred4 = threading.Thread(target=request_to_json_pl, args=(urls[3], ))
+    thred4.start()
+    thred5 = threading.Thread(target=request_to_json_pl, args=(urls[4], ))
+    thred5.start()
+    thred6 = threading.Thread(target=request_to_json_pl, args=(urls[5], ))
+    thred6.start()
+    thred1.join()
+    thred2.join()
+    thred3.join()
+    thred4.join()
+    thred5.join()
+    thred6.join()
 
     with open("result_data_json.json", "w") as file:
         json.dump(data_json, file)
